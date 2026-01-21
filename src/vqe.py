@@ -197,6 +197,8 @@ class IndirectVQE:
     def run_vqe(self) -> Dict:
 
         vqe_constraint = None
+        t_final_constraints = None
+        constraints = None
         isRandom: bool = False
         initial_cost: float = 0
         min_cost: float | None = None
@@ -255,6 +257,8 @@ class IndirectVQE:
                     all_params_length=total_params,
                     T_max=self.ansatz_tf,
                 )
+                constraints = [vqe_constraint, t_final_constraints]
+            
 
 
             elif self.optimizer != "SLSQP" and self.constraint:
@@ -263,7 +267,7 @@ class IndirectVQE:
             # (4) Run optimization
             min_cost, sol_optimized_param = self.run_optimization(
                 parameters = random_initial_param,
-                constraint = [vqe_constraint, t_final_constraints]
+                constraint = constraints
             )  # type: ignore
 
             # for i in range(self.iteration):
