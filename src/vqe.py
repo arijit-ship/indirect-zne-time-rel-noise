@@ -9,7 +9,7 @@ from qulacsvis import circuit_drawer
 from scipy.optimize import minimize
 
 from src.ansatz import create_noisy_ansatz, noiseless_ansatz
-from src.constraint import create_time_constraints
+from src.constraint import create_time_constraints, create_tf_fixed_constraint
 from src.createparam import create_param
 from src.hamiltonian import (
     create_heisenberg_hamiltonian,
@@ -168,8 +168,6 @@ class IndirectVQE:
             state = QuantumState(self.nqubits)
         else:
             raise ValueError(f"Unsupported state: {self.state}. Supported states are: 'dmatrix', 'statevector'")
-        param = param.copy()
-        param[self.ansatz_layer - 1] = self.ansatz_tf  # FORCE t_f = T_max
         self.ansatz_circuit = self.create_ansatz(param=param)
         self.ansatz_circuit.update_quantum_state(state)
         cost = self.observable_hami.get_expectation_value(state)
@@ -242,8 +240,22 @@ class IndirectVQE:
 
             # (3) Checking constraint before optimization
             if self.constraint and self.optimizer == "SLSQP":
-                vqe_constraint = create_time_constraints(self.ansatz_layer, len(random_initial_param))
-                
+                # vqe_constraint = create_time_constraints(self.ansatz_layer, len(random_initial_param))
+                # t_final_constraints = create_tf_fixed_constraint(
+                #     tf_index=self.ansatz_layer,
+                #     all_params_length=len(random_initial_param),
+                #     T_max=self.ansatz_tf,
+                # )
+                num_time = self.ansatz_layer
+                total_params = len(random_initial_param)
+                tf_index = num_time - 1  
+                vqe_constraint = create_time_constraints(num_time, total_params)
+                t_final_constraints = create_tf_fixed_constraint(
+                    tf_index=tf_index,
+                    all_params_length=total_params,
+                    T_max=self.ansatz_tf,
+                )
+
 
             elif self.optimizer != "SLSQP" and self.constraint:
                 raise ValueError(f"Constaint not supported for: {self.optimizer}")
@@ -251,7 +263,7 @@ class IndirectVQE:
             # (4) Run optimization
             min_cost, sol_optimized_param = self.run_optimization(
                 parameters = random_initial_param,
-                constraint = vqe_constraint
+                constraint = [vqe_constraint, t_final_constraints]
             )  # type: ignore
 
             # for i in range(self.iteration):
