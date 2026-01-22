@@ -6,7 +6,7 @@ import uuid
 from ast import Dict
 from datetime import datetime
 from typing import List, Union
-
+import numpy as np
 import yaml
 
 from configValidator import validate_yml_config
@@ -18,6 +18,21 @@ from src.zne import ZeroNoiseExtrapolation
 # Global symbol count
 symbol_count = 25
 
+def convert_numpy(obj):
+    """
+    Recursively convert NumPy arrays and scalars in a dict/list to Python types
+    so they are JSON serializable.
+    """
+    if isinstance(obj, dict):
+        return {k: convert_numpy(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy(v) for v in obj]
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, np.generic):
+        return obj.item()
+    else:
+        return obj
 
 def load_config(config_path):
     # Check if the config file exists
@@ -313,7 +328,7 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
     min_cost_history = []
     all_optimized_param = []
     time_evolution_hamiltonian_string = []
-
+    initial_param_all = []
     print("=" * symbol_count + "Config" + "=" * symbol_count)
     print(config)
     print("=" * symbol_count + "VQE running" + "=" * symbol_count)
@@ -344,16 +359,18 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
 
         # Extracting output
         initial_cost = vqe_output["initial_cost"]
+        initial_param_dict = vqe_output["initial_param_dict"]
         min_cost = vqe_output["min_cost"]
         optimized_param = vqe_output["optimized_param"]
 
         initial_costs_history.append(initial_cost)
         min_cost_history.append(min_cost)
         all_optimized_param.append(optimized_param)
+        initial_param_all.append(initial_param_dict)
 
     # Hamiltonian in time-evolution gate does NOT change in each iteration,
     # so append the Hamiltonian string outside the lopp.
-    time_evolution_hamiltonian_string.append(str(vqe_instance.get_ugate_hamiltonain()))
+    time_evolution_hamiltonian_string.append(str(vqe_instance.get_ugate_hamiltonain())) # type: ignore
 
     end_time = time.time()
     total_run_time = end_time - start_time
@@ -365,6 +382,7 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
 
     print(f"Exact sol: {exact_cost}")
     print(f"Initial costs: {initial_costs_history}")
+    print(f"Initial parameters dict: {initial_param_all}")
     print(f"Optimized minimum costs: {min_cost_history}")
     print(f"Optimized parameters: {all_optimized_param}")
     print(f"Noise details: {noisy_gate_related_details} ")
@@ -378,12 +396,14 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{file_name_prefix}_{timestamp}_VQE_bigT_tmax_{u_gate_final_time}.json")
 
+
     # Prepare the data to be written in JSON format
     output_data = {
         "config": config,
         "output": {
             "exact_sol": exact_cost,
             "initial_cost_history": initial_costs_history,
+            "initial_randm_param_values":  initial_param_all,
             "optimized_minimum_cost": min_cost_history,
             "optimized_parameters": all_optimized_param,
             "noise_details": noisy_gate_related_details,
@@ -393,10 +413,11 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
             "observable_string": str(target_observable),
             "time_evolution_gate_hamiltonian_string": time_evolution_hamiltonian_string,
         },
+        
     }
 
     with open(output_file, "w") as file:
-        json.dump(output_data, file, indent=None, separators=(",", ":"))
+        json.dump(convert_numpy(output_data), file, indent=4)
 
     # Print the path of the output file
     print("=" * symbol_count + "File path" + "=" * symbol_count)

@@ -203,6 +203,7 @@ class IndirectVQE:
         initial_cost: float = 0
         min_cost: float | None = None
         sol_optimized_param = None
+        initial_param_dict = None
 
         # Decide the initial param type: random or provided. If provided, validate the length.
         if isinstance(self.init_param, str) and self.init_param.lower() == "random":
@@ -222,7 +223,7 @@ class IndirectVQE:
         if not self.optimization_status:
 
             if isRandom:
-                random_initial_param = create_param(
+                random_initial_param, initial_param_dict = create_param(
                     self.ansatz_layer, self.ansatz_gateset, self.ansatz_ti, self.ansatz_tf
                 )
                 initial_cost = self.cost_function(param=random_initial_param)
@@ -235,8 +236,8 @@ class IndirectVQE:
         else:
 
             # (1) Create random initial param
-            random_initial_param = create_param(self.ansatz_layer, self.ansatz_gateset, self.ansatz_ti, self.ansatz_tf)
-
+            random_initial_param, initial_param_dict = create_param(self.ansatz_layer, self.ansatz_gateset, self.ansatz_ti, self.ansatz_tf)
+            
             # (2) Calculate the initial cost with random initial param
             initial_cost = self.cost_function(param=random_initial_param)
 
@@ -292,6 +293,7 @@ class IndirectVQE:
         vqe_result: Dict = {
             "initial_cost": initial_cost,
             "initial_param_value": self.init_param,
+            "initial_param_dict": initial_param_dict,
             "min_cost": min_cost,
             "optimized_param": sol_optimized_param,
         }

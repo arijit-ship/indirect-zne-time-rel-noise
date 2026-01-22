@@ -1,6 +1,6 @@
 # Run configurations: Choose from 'vqe', 'redundant', and 'zne'.
 run: "vqe-bigT-simulation"
-bigT: [5, 10, 15, 20.0, 30.0, 40, 45]
+bigT: [5]
 
 # System configuration
 nqubits: 3
@@ -32,13 +32,13 @@ observable:
 
 # Circuit configuration
 ansatz:
-  layer: 30
+  layer: 2
   # Not tested. Keep gateset=1, there could be bugs.
   gateset: 1
   ugate:
     # Type options: 'custom', 'xy-iss', 'ising', and 'heisenberg'.
     # 'custom' and 'ising' are created using a Hamiltonian with terms XZ-Z (this is NOT any standard familier XY model, we call it 'Fancy XY-model Hamiltonian').
-    type: "xy-iss"
+    type: "heisenberg"
     # WARNING: For ZNE redundant circuit, the ansatz type must be 'xy-iss' (stands for XY identity-scaling-supported).
     
     coefficients:
@@ -56,7 +56,7 @@ ansatz:
 
 # Variational Quantum Eigensolver (VQE) configuration
 vqe:
-  iteration: 1
+  iteration: 2
   # Optimization configuration
   optimization:
     status: True
