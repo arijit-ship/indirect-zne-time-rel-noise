@@ -131,12 +131,12 @@ def create_noisy_ansatz(
         }
         trotter_details.append(layer_entry)
         
-        chunks.append(circuit.copy())
+        #chunks.append(circuit.copy())
         flag += 2 
         #print(f"layer entry trotter details: {layer_entry}\n")
         
     return {
-        "chunks": chunks,
+        "chunks": None,
         "circuit": circuit,
         "trotter_details": trotter_details
     }

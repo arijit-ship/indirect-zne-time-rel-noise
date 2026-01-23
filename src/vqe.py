@@ -326,12 +326,15 @@ class IndirectVQE:
             output_file = os.path.join(output_dir, f"{prefix}_circuit_{timestamp}.png")
         else:
             raise ValueError(f"Invalid circuit figure file type: {filetype}. Valid types are: SVG, PNG.")
-
-        circuit_drawer(self.ansatz["chunks"][0], "mpl")  # type: ignore
-        plt.savefig(output_file, dpi=dpi, bbox_inches='tight')
-        plt.close()
-        # Print the path of the output file
-        print(f"Circuit fig saved to: {os.path.abspath(output_file)}")
+        circuit_chunk = self.ansatz["chunks"]
+        if circuit_chunk is None:
+            print("No circuit chunks available to draw.")
+        else:
+            circuit_drawer(self.ansatz["chunks"][0], "mpl")  # type: ignore
+            plt.savefig(output_file, dpi=dpi, bbox_inches='tight')
+            plt.close()
+            # Print the path of the output file
+            print(f"Circuit fig saved to: {os.path.abspath(output_file)}")
 
     def get_noise_level(self) -> Tuple[Union[int, None], Union[int, None], Union[int, None]]:
         """
