@@ -126,6 +126,7 @@ def create_noisy_ansatz(
         # 4. Format into your requested structure
         layer_entry = {
             "parent_layer": layer,
+            "time_interval": [ti, tf],
             "trotter_details": trotter_dict
         }
         trotter_details.append(layer_entry)
