@@ -142,8 +142,9 @@ def lie_trotter_evo(nqubits, circuit, tf, ti, delta_t, ugateH, C):
     
     depolnoise_prb = C * (duration / n_i)
     dt_per_step = duration / n_i
-    
-    time_evo_gate = create_time_evo_unitary(hamiltonian=ugateH, ti=0, tf=dt_per_step)
+    ti = ti/n_i
+    tf = tf/n_i
+    time_evo_gate = create_time_evo_unitary(hamiltonian=ugateH, ti=ti, tf=tf)
     
     # Initialize the structure for this parent layer
     trotter_dict = {
