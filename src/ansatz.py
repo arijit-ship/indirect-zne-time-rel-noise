@@ -104,8 +104,13 @@ def create_noisy_ansatz(
         circuit.add_gate(RY(0, param[flag + 1]))
         
         # 2. Determine time boundaries
-        ti = 0.0 if layer == 0 else param[layer - 1]
-        tf = param[layer]
+        if layer == 0:
+            ti = 0.0
+            tf = param[0]
+        else:
+            ti = param[layer-1]
+            tf = param[layer]
+
 
         # 3. Trotterize and get the nested dictionary
         circuit, trotter_dict = lie_trotter_evo(
