@@ -425,6 +425,121 @@ def initialize_vqe_bigT(u_gate_final_time: float) -> None:
     if circuit_draw_status:
         vqe_instance.drawCircuit(prefix=file_name_prefix, dpi=fig_dpi, filetype=fig_filetype)
 
+def initialize_vqe_bigT_noisy(u_gate_final_time: float, C: float, del_t: float) -> None:
+    """
+    Initializes the variational quantum eigensolver for bigT simulation.
+    """
+    """
+    Initializes the variational quantum eigensolver.
+    """
+    initial_costs_history = []
+    min_cost_history = []
+    all_optimized_param = []
+    time_evolution_hamiltonian_string = []
+    initial_param_all = []
+    lie_trotter_details_all = []
+    print("=" * symbol_count + "Config" + "=" * symbol_count)
+    print(config)
+    print("=" * symbol_count + "VQE running" + "=" * symbol_count)
+    start_time =0
+    start_time = time.time()
+
+    print(f"Final time set to: {u_gate_final_time}")
+    ansatz["ugate"]["time"]["max"] = u_gate_final_time
+    for i in range(vqe_iteration):
+
+        each_start_time = time.time()
+        vqe_instance = IndirectVQE(
+            nqubits=nqubits,
+            state=state,
+            observable=target_observable,
+            vqe_profile=vqe_profile,
+            ansatz_profile=ansatz,
+            noise_profile=noise_profile,
+            identity_factors=[0, 0, 0, 0],
+            init_param=initialparam,
+            run="vqe-bigT-simulation-noisy",
+            C=C,
+            del_t=del_t,
+        )
+        vqe_output = vqe_instance.run_vqe()
+        each_end_time = time.time()
+
+        each_run_time = each_end_time - each_start_time
+
+        print(f"VQE #{i+1} done with time taken: {each_run_time} sec.")
+
+        # Extracting output
+        initial_cost = vqe_output["initial_cost"]
+        initial_param_dict = vqe_output["initial_param_dict"]
+        min_cost = vqe_output["min_cost"]
+        optimized_param = vqe_output["optimized_param"]
+
+        initial_costs_history.append(initial_cost)
+        min_cost_history.append(min_cost)
+        all_optimized_param.append(optimized_param)
+        initial_param_all.append(initial_param_dict)
+        lie_trotter_details_all.append(vqe_output["lie_trotter_details"])
+
+    # Hamiltonian in time-evolution gate does NOT change in each iteration,
+    # so append the Hamiltonian string outside the lopp.
+    time_evolution_hamiltonian_string.append(str(vqe_instance.get_ugate_hamiltonain())) # type: ignore
+
+    end_time = time.time()
+    total_run_time = end_time - start_time
+
+    noisy_gate_related_details = vqe_instance.get_noise_level()
+    # noise_level_list = [nR, nT, nY, nCz]
+
+    print("=" * symbol_count + "Output" + "=" * symbol_count)
+
+    print(f"Exact sol: {exact_cost}")
+    print(f"Initial costs: {initial_costs_history}")
+    print(f"Initial parameters dict: {initial_param_all}")
+    print(f"Optimized minimum costs: {min_cost_history}")
+    print(f"Optimized parameters: {all_optimized_param}")
+    print(f"Noise details: {noisy_gate_related_details} ")
+    print(f"Lie trotter details: {lie_trotter_details_all} ")
+    print(f"Run time: {total_run_time} sec")
+
+    # Generate timestamp for unique file name
+    # Get the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_dir = os.path.join(current_dir, "output")
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, f"{file_name_prefix}_{timestamp}_VQE_bigT_tmax_{u_gate_final_time}.json")
+
+
+    # Prepare the data to be written in JSON format
+    output_data = {
+        "config": config,
+        "output": {
+            "exact_sol": exact_cost,
+            "initial_cost_history": initial_costs_history,
+            "initial_randm_param_values":  initial_param_all,
+            "optimized_minimum_cost": min_cost_history,
+            "optimized_parameters": all_optimized_param,
+            "noise_details": noisy_gate_related_details,
+            "run_time_sec": total_run_time,
+            "lie_trotter_details_all": lie_trotter_details_all
+        },
+        "others": {
+            "observable_string": str(target_observable),
+            "time_evolution_gate_hamiltonian_string": time_evolution_hamiltonian_string,
+        },
+        
+    }
+
+    with open(output_file, "w") as file:
+        json.dump(convert_numpy(output_data), file, indent=4)
+
+    # Print the path of the output file
+    print("=" * symbol_count + "File path" + "=" * symbol_count)
+    print(f"Output saved to: {os.path.abspath(output_file)}")
+    if circuit_draw_status:
+        vqe_instance.drawCircuit(prefix=file_name_prefix, dpi=fig_dpi, filetype=fig_filetype)
+
 if __name__ == "__main__":
     # Check if a config file argument is provided
     if len(sys.argv) < 2:
@@ -521,5 +636,11 @@ if __name__ == "__main__":
             for u_gate_time in final_time_list:
                 print(f"Running VQE for bigT = {u_gate_time}")
                 initialize_vqe_bigT(u_gate_final_time=u_gate_time)
+        elif operation.lower() == "vqe-bigt-simulation-noisy":
+            final_time_list: List[float] = config["bigT"]
+            for u_gate_time in final_time_list:
+                print(f"Running VQE for bigT = {u_gate_time}")
+                initialize_vqe_bigT_noisy(u_gate_final_time=u_gate_time, C=config["C"], del_t=config["del_t"])
+        
         else:
             raise ValueError(f"Invalid run: {operation}. Valid runs are: 'vqe', 'redundant', and 'zne'.")

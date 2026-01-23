@@ -1,6 +1,8 @@
 # Run configurations: Choose from 'vqe', 'redundant', and 'zne'.
-run: "vqe-bigT-simulation"
-bigT: [80]
+run: "vqe-bigT-simulation-noisy"
+bigT: [5]
+C: 0.01
+del_t: 0.01
 
 # System configuration
 nqubits: 3
@@ -32,7 +34,7 @@ observable:
 
 # Circuit configuration
 ansatz:
-  layer: 4
+  layer: 3
   # Not tested. Keep gateset=1, there could be bugs.
   gateset: 1
   ugate:

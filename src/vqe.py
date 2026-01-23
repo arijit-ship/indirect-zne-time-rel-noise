@@ -32,6 +32,9 @@ class IndirectVQE:
         noise_profile: Dict,
         identity_factors: List[int],
         init_param: list[float] | str,
+        run : str = "vqe-bigT-simulation",
+        C: float = 0.0,
+        del_t: float = 0.0,
     ) -> None:
 
         self.nqubits = nqubits
@@ -60,9 +63,15 @@ class IndirectVQE:
         self.ansatz_identity_factors: List[int] = identity_factors
         self.init_param = init_param
 
+        self.C = C
+        self.del_t = del_t
+        self.run = run
+
         # Ansatz
         self.ansatz: dict = None
         self.ansatz_circuit: QuantumCircuit = None
+
+        self.lie_trotter_details: list = []
 
         """
         Validate the different args parsed form the config file and raise an error if inconsistancy found.
@@ -135,18 +144,18 @@ class IndirectVQE:
         Noisy circuit with noise probability 0 is equivalent to noiseless circuit.
         """
 
-        if self.ansatz_noise_status:
+        if self.run == "vqe-bigT-simulation-noisy":
             self.ansatz = create_noisy_ansatz(
                 nqubits=self.nqubits,
                 layers=self.ansatz_layer,
-                gateset=self.ansatz_gateset,
                 ugateH=self.ugate_hami,
-                ansatz_noise_type=self.ansatz_noise_type,
-                ansatz_noise_prob=self.ansatz_noise_value,
                 param=param,
-                identity_factors=self.ansatz_identity_factors,
+                delta_t=self.del_t,
+                C=self.C
             )
-        else:
+            # CAPTURE THE DATA HERE
+            self.lie_trotter_details = self.ansatz.get("trotter_details", [])
+        elif self.run == "vqe-bigT-simulation":
             self.ansatz = noiseless_ansatz(
                 nqubits=self.nqubits,
                 layers=self.ansatz_layer,
@@ -154,6 +163,9 @@ class IndirectVQE:
                 ugateH=self.ugate_hami,
                 param=param,
             )
+            # Noiseless doesn't have Trotter details in your current ansatz.py, 
+            # but we set it to empty to avoid carrying over old data.
+            self.lie_trotter_details = []
         self.ansatz_circuit = self.ansatz["circuit"]
         return self.ansatz_circuit
 
@@ -204,6 +216,7 @@ class IndirectVQE:
         min_cost: float | None = None
         sol_optimized_param = None
         initial_param_dict = None
+
 
         # Decide the initial param type: random or provided. If provided, validate the length.
         if isinstance(self.init_param, str) and self.init_param.lower() == "random":
@@ -296,6 +309,7 @@ class IndirectVQE:
             "initial_param_dict": initial_param_dict,
             "min_cost": min_cost,
             "optimized_param": sol_optimized_param,
+            "lie_trotter_details": self.lie_trotter_details
         }
 
         return vqe_result
@@ -314,7 +328,7 @@ class IndirectVQE:
             raise ValueError(f"Invalid circuit figure file type: {filetype}. Valid types are: SVG, PNG.")
 
         circuit_drawer(self.ansatz["chunks"][0], "mpl")  # type: ignore
-        plt.savefig(output_file, dpi=dpi)
+        plt.savefig(output_file, dpi=dpi, bbox_inches='tight')
         plt.close()
         # Print the path of the output file
         print(f"Circuit fig saved to: {os.path.abspath(output_file)}")
