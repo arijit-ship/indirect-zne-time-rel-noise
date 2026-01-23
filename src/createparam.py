@@ -26,7 +26,7 @@ def create_param(layer: int, gateset: int, ti: float, tf: float) -> np.ndarray:
     time = np.sort(time)  # Time must be in incresing order
     for i in time:
         param = np.append(param, i)
-    #param= np.append(param, tf)  # Last time is always tf
+    #param= np.append(param, tf)  #  Last time is always tf
 
     # Theta param
     theta_len = layer * gateset * 2
