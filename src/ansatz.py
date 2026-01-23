@@ -55,8 +55,7 @@ def noiseless_ansatz(
     chunks = []
     circuit = QuantumCircuit(nqubits)
 
-    flag = layers  # index where theta params start
-    T_max = param[layers - 1]  # Final time is always T_max
+    flag = layers  # theta params start
     for layer in range(layers):
 
         # ---- Rotation gates ----
@@ -64,24 +63,20 @@ def noiseless_ansatz(
             circuit.add_gate(RX(0, param[flag + 2*i]))
             circuit.add_gate(RY(0, param[flag + 2*i + 1]))
 
-        # ---- Time evolution gate ----
         if layer == 0:
             ti = 0.0
             tf = param[0]
-
-        elif layer == layers - 1:
-            ti = param[layer]
-            tf = T_max  # FIXED final time
-
         else:
-            ti = param[layer]
-            tf = param[layer + 1]
+            ti = param[layer-1]
+            tf = param[layer]
+
 
         time_evo_gate = create_time_evo_unitary(ugateH, ti, tf)
         circuit.add_gate(time_evo_gate)
 
         flag += 2 * gateset
         chunks.append(circuit.copy())
+
 
     return {
         "chunks": chunks,

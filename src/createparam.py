@@ -26,11 +26,12 @@ def create_param(layer: int, gateset: int, ti: float, tf: float) -> np.ndarray:
     time = np.sort(time)  # Time must be in incresing order
     for i in time:
         param = np.append(param, i)
-    param= np.append(param, tf)  # Last time is always tf
+    #param= np.append(param, tf)  # Last time is always tf
 
     # Theta param
-    theta = np.random.random(layer * gateset * 2) * 1e-1  # Each layer has 4 rotation gates
+    theta_len = layer * gateset * 2
+    theta = np.random.random(theta_len) * 1e-1  # Each layer has 4 rotation gates
     for i in theta:
         param = np.append(param, i)
     print("Initial parameter created.", time, theta)
-    return param, {"time": time.tolist(), "theta": theta.tolist()}
+    return param, {"time-len": layer, "time": time.tolist(), "theta-len": theta_len,"theta": theta.tolist()}

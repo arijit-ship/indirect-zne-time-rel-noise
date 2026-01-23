@@ -1,0 +1,147 @@
+import json
+import os
+import sys
+import time
+from datetime import datetime
+from typing import List
+
+import yaml
+import numpy as np
+
+from src.observable import constructObservable
+from src.modules import get_eigen_min
+from src.vqe import IndirectVQE
+
+
+# --------------------------------------------------
+# Utils
+# --------------------------------------------------
+
+def load_config(path: str) -> dict:
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Config file not found: {path}")
+    with open(path, "r") as f:
+        return yaml.safe_load(f)
+
+
+def json_safe(obj):
+    if isinstance(obj, dict):
+        return {k: json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [json_safe(v) for v in obj]
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    return obj
+
+
+def save_output(data: dict, prefix: str):
+    outdir = "output"
+    os.makedirs(outdir, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    path = os.path.join(outdir, f"{prefix}_{ts}.json")
+    with open(path, "w") as f:
+        json.dump(json_safe(data), f, indent=2)
+    print(f"[OK] Output saved → {os.path.abspath(path)}")
+
+
+# --------------------------------------------------
+# Core runners
+# --------------------------------------------------
+
+def run_vqe_bigT(config: dict, noisy: bool):
+    nqubits = config["nqubits"]
+    state = config["state"]
+    ansatz = config["ansatz"]
+    noise_profile = config["noise_profile"]
+    vqe_profile = config["vqe"]
+    init_param = config["init_param"]["value"]
+
+    bigT_list: List[float] = config["bigT"]
+    delta_t = config.get("delta_t", 0.0)
+    C = config.get("C", 0.0)
+
+    observable = constructObservable(
+        nqubits=nqubits,
+        definition=config["observable"]["def"],
+        coefficient=config["observable"]["coefficients"],
+    )
+
+    exact_energy = get_eigen_min(observable)
+
+    results = []
+
+    for T_max in bigT_list:
+        print(f"\n=== Running VQE (T_max={T_max}, noisy={noisy}) ===")
+        ansatz_local = dict(ansatz)
+        ansatz_local["ugate"]["time"]["max"] = T_max
+
+        start = time.time()
+
+        vqe = IndirectVQE(
+            nqubits=nqubits,
+            state=state,
+            observable=observable,
+            vqe_profile=vqe_profile,
+            ansatz_profile=ansatz_local,
+            noise_profile=noise_profile,
+            identity_factors=[0, 0, 0, 0],
+            init_param=init_param,
+            run="vqe-bigT-simulation-with-noise" if noisy else "vqe-bigT-simulation",
+            delta_t=delta_t,
+            C=C,
+        )
+
+        out = vqe.run_vqe()
+
+        elapsed = time.time() - start
+        print(f"✔ Done in {elapsed:.2f}s")
+
+        results.append({
+            "T_max": T_max,
+            "initial_cost": out["initial_cost"],
+            "min_cost": out["min_cost"],
+            "optimized_param": out["optimized_param"],
+            "trotter_details": out.get("trotter_details"),
+            "runtime_sec": elapsed,
+        })
+
+    save_output(
+        {
+            "exact_energy": exact_energy,
+            "results": results,
+        },
+        prefix=config["output"]["file_name_prefix"],
+    )
+
+
+# --------------------------------------------------
+# Main
+# --------------------------------------------------
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python main.py <config.yml>")
+        sys.exit(1)
+
+    config = load_config(sys.argv[1])
+    mode = config["run"].lower()
+
+    if mode == "vqe-bigt-simulation":
+        run_vqe_bigT(config, noisy=False)
+
+    elif mode == "vqe-bigt-simulation-with-noise":
+        run_vqe_bigT(config, noisy=True)
+
+    else:
+        raise ValueError(
+            f"Unsupported run mode: {mode}\n"
+            f"Valid modes:\n"
+            f"  - vqe-bigt-simulation\n"
+            f"  - vqe-bigt-simulation-with-noise"
+        )
+
+
+if __name__ == "__main__":
+    main()
