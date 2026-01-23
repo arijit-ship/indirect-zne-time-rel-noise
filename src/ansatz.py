@@ -137,15 +137,13 @@ def create_noisy_ansatz(
 
 def lie_trotter_evo(nqubits, circuit, tf, ti, delta_t, ugateH, C):
 
-    n_i = int(np.ceil(abs(duration) / delta_t)) if delta_t > 0 else 1
+    n_i = int(np.ceil(abs(tf-ti) / delta_t)) if delta_t > 0 else 1
     if n_i == 0: n_i = 1
     
-    
-    dt_per_step = duration / n_i
     depolnoise_prb = C * (tf-ti / n_i)
-    ti = ti/n_i
-    tf = tf/n_i
-    time_evo_gate = create_time_evo_unitary(hamiltonian=ugateH, ti=ti, tf=tf)
+    # ti = ti/n_i
+    # tf = tf/n_i
+    time_evo_gate = create_time_evo_unitary(hamiltonian=ugateH, ti=ti/n_i, tf=tf/n_i)
     
     # Initialize the structure for this parent layer
     trotter_dict = {
