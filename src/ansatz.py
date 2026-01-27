@@ -146,7 +146,7 @@ def lie_trotter_evo(nqubits, circuit, tf, ti, delta_t, ugateH, C):
     n_i = int(np.ceil(abs(tf-ti) / delta_t)) if delta_t > 0 else 1
     if n_i == 0: n_i = 1
     
-    depolnoise_prb = C * (tf-ti / n_i)
+    depolnoise_prb = C * ((tf-ti) / n_i)
     # ti = ti/n_i
     # tf = tf/n_i
     time_evo_gate = create_time_evo_unitary(hamiltonian=ugateH, ti=ti/n_i, tf=tf/n_i)
@@ -155,7 +155,7 @@ def lie_trotter_evo(nqubits, circuit, tf, ti, delta_t, ugateH, C):
     trotter_dict = {
         "total_steps": n_i,
         "noise_prob": depolnoise_prb,
-        "steps": [] # This will hold the "deep_trotter" blocks
+        "steps": [] 
     }
     
     for i in range(n_i):
@@ -163,7 +163,7 @@ def lie_trotter_evo(nqubits, circuit, tf, ti, delta_t, ugateH, C):
         for q in range(nqubits):
             circuit.add_noise_gate(Identity(q), "Depolarizing", depolnoise_prb)
         
-        # Append in the "deep_trotter" format requested
+        # Append in the "deep_trotter"
         trotter_dict["steps"].append({
             "deep_trotter": {
                 "step_loc": i,

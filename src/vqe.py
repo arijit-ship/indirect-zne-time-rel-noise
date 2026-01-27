@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from typing import Dict, List, Tuple, Union
 
+import gc
 import matplotlib.pyplot as plt
 import numpy as np
 from qulacs import DensityMatrix, Observable, QuantumCircuit, QuantumState
@@ -35,11 +36,12 @@ class IndirectVQE:
         run : str = "vqe-bigT-simulation",
         C: float = 0.0,
         del_t: float = 0.0,
+        purity_check: bool = False,
     ) -> None:
 
         self.nqubits = nqubits
         self.state = state
-
+        self.purity_check = purity_check
         # Optimization variables
         self.optimization_status: bool = vqe_profile["optimization"]["status"]
         self.optimizer: str = vqe_profile["optimization"]["algorithm"]
@@ -72,6 +74,7 @@ class IndirectVQE:
         self.ansatz_circuit: QuantumCircuit = None
 
         self.lie_trotter_details: list = []
+        self.purity_values: list = []
 
         """
         Validate the different args parsed form the config file and raise an error if inconsistancy found.
@@ -184,6 +187,13 @@ class IndirectVQE:
         self.ansatz_circuit.update_quantum_state(state)
         cost = self.observable_hami.get_expectation_value(state)
 
+        if self.purity_check:
+            ...
+            
+        # CRITICAL FR MEMOY
+        del state
+        del self.ansatz_circuit
+        gc.collect()
         return cost
 
     def run_optimization(self, parameters, constraint):
@@ -352,3 +362,19 @@ class IndirectVQE:
         Returns time-evolution gate Hamiltonian.
         """
         return self.ugate_hami
+    
+    def calculate_purity(density_matrix_obj):
+        """
+        Calculates Tr(rho^2) for a given Qulacs DensityMatrix object.
+        """
+        # 1. Get the density matrix as a numpy array
+        rho = density_matrix_obj.get_matrix() #
+        
+        # 2. Calculate rho^2 (matrix multiplication)
+        rho_squared = np.matmul(rho, rho)
+        
+        # 3. Calculate the trace
+        purity = np.trace(rho_squared)
+        
+        # Purity is real, but NumPy may return a complex type; take the real part.
+        return purity.real
