@@ -1,0 +1,717 @@
+{
+    "config": {
+        "run": "vqe-bigT-simulation-noisy",
+        "bigT": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9
+        ],
+        "C": 0,
+        "del_t": 0.1,
+        "nqubits": 5,
+        "state": "dmatrix",
+        "output": {
+            "file_name_prefix": "vqe-time-rel-noise-experement_q5_l20_c0_delt0.1",
+            "draw": {
+                "status": false,
+                "fig_dpi": 100,
+                "type": "png"
+            }
+        },
+        "observable": {
+            "def": "ising",
+            "coefficients": {
+                "cn": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "bn": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "r": 1
+            }
+        },
+        "ansatz": {
+            "layer": 20,
+            "gateset": 1,
+            "ugate": {
+                "type": "heisenberg",
+                "coefficients": {
+                    "cn": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        0.5
+                    ],
+                    "bn": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "r": 0
+                },
+                "time": {
+                    "min": 0.0,
+                    "max": 0.4
+                }
+            }
+        },
+        "vqe": {
+            "iteration": 10,
+            "optimization": {
+                "status": true,
+                "algorithm": "SLSQP",
+                "constraint": true
+            }
+        },
+        "init_param": {
+            "value": "random"
+        },
+        "noise_profile": {
+            "status": false,
+            "type": "dephasing",
+            "noise_prob": [
+                0.001,
+                0.001,
+                0.0,
+                0.0
+            ],
+            "noise_on_init_param": {
+                "status": false,
+                "value": 0
+            }
+        },
+        "redundant": {
+            "identity_factors": [
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            ]
+        },
+        "zne": {
+            "method": "richardson",
+            "degree": 1,
+            "sampling": "default",
+            "data_points": null
+        }
+    },
+    "output": {
+        "iteration_index": 0,
+        "exact_sol": -6.026674183332271,
+        "initial_cost_history": [
+            4.04075461056515
+        ],
+        "initial_randm_param_values": [
+            {
+                "time-len": 20,
+                "time": [
+                    0.0013415009427357738,
+                    0.012829931303638721,
+                    0.02071504493354559,
+                    0.0408502377177332,
+                    0.07241589546738258,
+                    0.0735020367443394,
+                    0.07497625028318669,
+                    0.07728711822584411,
+                    0.10379071971641918,
+                    0.12148007779638999,
+                    0.13269171808716296,
+                    0.19534065617954757,
+                    0.21213420989049664,
+                    0.21628353738416528,
+                    0.27645984625639924,
+                    0.28036230162637055,
+                    0.3048256508596914,
+                    0.3081317628901188,
+                    0.33574712623680475,
+                    0.3833986152644396
+                ],
+                "theta-len": 40,
+                "theta": [
+                    0.048982965312418594,
+                    0.09491742832255609,
+                    0.0061401473298180135,
+                    0.0795454569046735,
+                    0.09391075642911062,
+                    0.07708039696952262,
+                    0.09443786137371753,
+                    0.09454394317672545,
+                    0.009900200946379379,
+                    0.050896340424483724,
+                    0.08977403188531663,
+                    0.04982654621703282,
+                    0.07475173094964609,
+                    0.0008258948956007761,
+                    0.08855466398344577,
+                    0.08027691826735961,
+                    0.04445080529775334,
+                    0.013361344898052165,
+                    0.053301721588664086,
+                    0.09247304208113732,
+                    0.004721011742613779,
+                    0.044431641861500205,
+                    0.07502087564034393,
+                    0.07777507971885722,
+                    0.009060215945970297,
+                    0.03188204539827957,
+                    0.08493205320259282,
+                    0.09784584605859167,
+                    0.08211838892821188,
+                    0.07729719803908569,
+                    0.05453780047847633,
+                    0.028520159081976904,
+                    0.06111028986955835,
+                    0.0003737691229723783,
+                    0.0029114001338631846,
+                    0.05094306924306588,
+                    0.04648605586551533,
+                    0.09133269313202459,
+                    0.022981985385273507,
+                    0.023828106290696673
+                ]
+            }
+        ],
+        "optimized_minimum_cost": [
+            2.301957428388336
+        ],
+        "optimized_parameters": [
+            [
+                4.0352825705489035e-16,
+                -2.6122581276918436e-16,
+                -2.7329640144035054e-16,
+                5.16128039244381e-16,
+                -5.1970346912035315e-17,
+                1.6451088470688936e-16,
+                5.992783377440428e-16,
+                0.1966110540858036,
+                0.19661105408580165,
+                0.3999999999999989,
+                0.40000000000000024,
+                0.3999999999999995,
+                0.39999999999999925,
+                0.4000000000000002,
+                0.40000000000000074,
+                0.3999999999999993,
+                0.39999999999999947,
+                0.4,
+                0.40000000000000063,
+                0.4,
+                0.3797571679924388,
+                0.32915389753252033,
+                0.3061758097541778,
+                0.3002490469768213,
+                0.35803872423862143,
+                0.25487231642901637,
+                0.3183774843727548,
+                0.2334013620799559,
+                0.21608914031571236,
+                0.20963365725993216,
+                0.2879519571621624,
+                0.22914197358093338,
+                0.32165445591825037,
+                0.14873033185783993,
+                0.34737201806299656,
+                0.1687840726539145,
+                0.47964916133686764,
+                -0.6010015651719359,
+                -0.560932471215386,
+                0.5256024436384655,
+                -0.47005410031811345,
+                -0.2386852178237391,
+                -0.32980315194724924,
+                -0.07018526643824599,
+                -0.6374037825675947,
+                0.4666469528788297,
+                -0.21663751477753554,
+                0.4822312056048569,
+                0.028386244690298722,
+                0.2875194105679218,
+                0.030022597181666364,
+                0.23129520903497092,
+                0.128157586861835,
+                0.06264632755342839,
+                0.11257918165562088,
+                0.1801346430945144,
+                0.3782623871264613,
+                0.12389050916413555,
+                0.7445208185270966,
+                -0.11310013914077588
+            ]
+        ],
+        "noise_details": {
+            "identity_factors": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "noise_level": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "gates_num": [
+                4,
+                1,
+                1,
+                0
+            ],
+            "noise_profile": {
+                "status": false,
+                "type": "dephasing",
+                "noise_prob": [
+                    0.001,
+                    0.001,
+                    0.0,
+                    0.0
+                ],
+                "noise_on_init_param": {
+                    "status": false,
+                    "value": 0
+                }
+            },
+            "odd_wires": 3
+        },
+        "run_time_sec": 22.06313729286194,
+        "lie_trotter_details_all": [
+            [
+                {
+                    "parent_layer": 0,
+                    "time_interval": [
+                        0.0,
+                        4.0352825705489035e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 1,
+                    "time_interval": [
+                        4.0352825705489035e-16,
+                        -2.6122581276918436e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 2,
+                    "time_interval": [
+                        -2.6122581276918436e-16,
+                        -2.7329640144035054e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 3,
+                    "time_interval": [
+                        -2.7329640144035054e-16,
+                        5.16128039244381e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 4,
+                    "time_interval": [
+                        5.16128039244381e-16,
+                        -5.1970346912035315e-17
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 5,
+                    "time_interval": [
+                        -5.1970346912035315e-17,
+                        1.6451088470688936e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 6,
+                    "time_interval": [
+                        1.6451088470688936e-16,
+                        5.992783377440428e-16
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 7,
+                    "time_interval": [
+                        5.992783377440428e-16,
+                        0.1966110540858036
+                    ],
+                    "trotter_details": {
+                        "total_steps": 2,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 2
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 2
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 8,
+                    "time_interval": [
+                        0.1966110540858036,
+                        0.19661105408580165
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 9,
+                    "time_interval": [
+                        0.19661105408580165,
+                        0.3999999999999989
+                    ],
+                    "trotter_details": {
+                        "total_steps": 3,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 3
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 3
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 3
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 10,
+                    "time_interval": [
+                        0.3999999999999989,
+                        0.40000000000000024
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 11,
+                    "time_interval": [
+                        0.40000000000000024,
+                        0.3999999999999995
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 12,
+                    "time_interval": [
+                        0.3999999999999995,
+                        0.39999999999999925
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 13,
+                    "time_interval": [
+                        0.39999999999999925,
+                        0.4000000000000002
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 14,
+                    "time_interval": [
+                        0.4000000000000002,
+                        0.40000000000000074
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 15,
+                    "time_interval": [
+                        0.40000000000000074,
+                        0.3999999999999993
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 16,
+                    "time_interval": [
+                        0.3999999999999993,
+                        0.39999999999999947
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 17,
+                    "time_interval": [
+                        0.39999999999999947,
+                        0.4
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 18,
+                    "time_interval": [
+                        0.4,
+                        0.40000000000000063
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 19,
+                    "time_interval": [
+                        0.40000000000000063,
+                        0.4
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": -0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        ]
+    },
+    "others": {
+        "observable_string": "1 X 0 X 1 + 1 Z 0 + 1 X 1 X 2 + 1 Z 1 + 1 X 2 X 3 + 1 Z 2 + 1 X 3 X 4 + 1 Z 3 + 1 Z 4",
+        "time_evolution_gate_hamiltonian_string": [
+            "0.5 X 0 X 1 + 0.5 Y 0 Y 1 + 0.5 Z 0 Z 1 + 0.5 X 1 X 2 + 0.5 Y 1 Y 2 + 0.5 Z 1 Z 2 + 0.5 X 2 X 3 + 0.5 Y 2 Y 3 + 0.5 Z 2 Z 3 + 0.5 X 3 X 4 + 0.5 Y 3 Y 4 + 0.5 Z 3 Z 4"
+        ]
+    }
+}
