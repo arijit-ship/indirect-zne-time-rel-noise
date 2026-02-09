@@ -144,103 +144,6 @@ def estimate_E_mix(t, y, T_large):
 # Fitting routines
 # ============================================================
 
-def fit_gamma(
-    t,
-    y,
-    sigma,
-    E_mix,
-    ZNE,
-    *,
-    p0=None,
-    bounds=None,
-    method="trf",
-    max_nfev=None,
-    ftol=1e-8,
-    xtol=1e-8,
-    gtol=1e-8,
-    verbose=0,
-):
-    """
-    Fit exponential decay rate gamma using only large-t data.
-
-    Model:
-        f_noisy(t) = E_mix
-                     + exp(-gamma * t)
-                       * [ (ZNE + A / (1 + (t / T0)**n)) - E_mix ]
-
-    Parameters
-    ----------
-    t : array_like
-        T_max data
-    y : array_like
-        Observed energy values
-    sigma : array_like or None
-        Standard deviations
-    E_mix : float
-        Mixed-state energy (fixed)
-    ZNE : float
-        Zero-noise extrapolated energy (fixed)
-
-    Keyword-only parameters
-    -----------------------
-    p0 : list or None
-        Initial guess [gamma, A, T0, n]
-    bounds : 2-tuple or None
-        Bounds ([gamma_min, A_min, T0_min, n_min],
-                [gamma_max, A_max, T0_max, n_max])
-    method : str
-        Optimization method ("trf", "dogbox", "lm")
-    max_nfev : int or None
-        Maximum function evaluations
-    ftol, xtol, gtol : float
-        Convergence tolerances
-    verbose : int
-        Verbosity level
-
-    Returns
-    -------
-    popt : ndarray
-        [gamma, A, T0, n]
-    pcov : ndarray
-        Covariance matrix
-    """
-
-    def model(t, gamma, A, T0, n):
-        return (
-            E_mix
-            + np.exp(-gamma * t)
-            * ((ZNE + A / (1.0 + (t / T0) ** n)) - E_mix)
-        )
-
-    if p0 is None:
-        p0 = [0.01, y[0] - ZNE, t[len(t) // 2], 2.0]
-
-    if bounds is None:
-        bounds = (
-            [0.0, -np.inf, 1e-12, 0.0],   # gamma, A, T0, n
-            [np.inf, np.inf, np.inf, np.inf],
-        )
-
-    popt, pcov = curve_fit(
-        model,
-        t,
-        y,
-        sigma=sigma,
-        p0=p0,
-        bounds=bounds,
-        method=method,
-        max_nfev=max_nfev,
-        ftol=ftol,
-        xtol=xtol,
-        gtol=gtol,
-        verbose=verbose,
-        absolute_sigma=True,
-    )
-
-    return popt, pcov
-
-
-
 def fit_hill_noiseless(
     t,
     y,
@@ -326,7 +229,472 @@ def fit_hill_noiseless(
         verbose=verbose,
     )
 
-    return popt, pcov
+    output = {
+        "input": {
+            "t": t,
+            "y": y,
+            "sigma": sigma,
+            "n": n,
+            "p0": p0,
+            "bounds": bounds,
+            "method": method,
+            "max_nfev": max_nfev,
+            "ftol": ftol,
+            "xtol": xtol,
+            "gtol": gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,
+            "pcov": pcov,
+        },
+    }
+    return output
+
+def fit_gamma_largeT(
+    t,
+    y,
+    sigma,
+    *,
+    p0=None,
+    bounds=None,
+    method="trf",
+    max_nfev=None,
+    ftol=1e-8,
+    xtol=1e-8,
+    gtol=1e-8,
+    verbose=0,
+):
+    """
+    Fit exponential decay rate gamma using large-t data only.
+
+    Model:
+        f_noisy_largeT(t) = B * exp(-gamma * t)
+
+    Parameters
+    ----------
+    t : array_like
+        T_max data (large-t region)
+    y : array_like
+        Observed values
+    sigma : array_like or None
+        Standard deviations
+
+    Keyword-only parameters
+    -----------------------
+    p0 : list or None
+        Initial guess [gamma, B]
+    bounds : 2-tuple or None
+        Bounds ([gamma_min, B_min],
+                [gamma_max, B_max])
+    method : str
+        Optimization method ("trf", "dogbox", "lm")
+    max_nfev : int or None
+        Maximum function evaluations
+    ftol, xtol, gtol : float
+        Convergence tolerances
+    verbose : int
+        Verbosity level
+
+    Returns
+    -------
+    popt : ndarray
+        [gamma, B]
+    pcov : ndarray
+        Covariance matrix
+    """
+
+    def model(t, gamma, B):
+        return B * np.exp(-gamma * t)
+
+    if p0 is None:
+        p0 = [
+            0.01,     # gamma
+            y[0],     # B ~ first large-t value
+        ]
+
+    if bounds is None:
+        # Parameter order: [gamma, B]
+        bounds = (
+            [0.0, -np.inf],
+            [np.inf, np.inf],
+        )
+
+    popt, pcov = curve_fit(
+        model,
+        t,
+        y,
+        sigma=sigma,
+        p0=p0,
+        bounds=bounds,
+        method=method,
+        max_nfev=max_nfev,
+        ftol=ftol,
+        xtol=xtol,
+        gtol=gtol,
+        verbose=verbose,
+        absolute_sigma=True,
+    )
+
+    output = {
+        "input": {
+            "t": t,
+            "y": y,
+            "sigma": sigma,
+            "p0": p0,
+            "bounds": bounds,
+            "method": method,
+            "max_nfev": max_nfev,
+            "ftol": ftol,
+            "xtol": xtol,
+            "gtol": gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,
+            "pcov": pcov,
+        },
+    }
+
+    return output
+
+def fit_smallT_ZNE(
+    t,
+    y,
+    sigma,
+    n,
+    *,
+    p0=None,
+    bounds=None,
+    method="trf",
+    max_nfev=None,
+    ftol=1e-8,
+    xtol=1e-8,
+    gtol=1e-8,
+    verbose=0,
+):
+    """
+    Fit (ZNE, A, T0) using small-t data.
+
+    Model:
+        f_noisy_smallT(t) = ZNE + A / (1 + (t / T0)**n)
+
+    Parameters
+    ----------
+    t : array_like
+        T_max data (small-t window)
+    y : array_like
+        Observed energy values
+    sigma : array_like or None
+        Standard deviations
+    n : float
+        Fixed power-law exponent
+
+    Keyword-only parameters
+    -----------------------
+    p0 : list or None
+        Initial guess [ZNE, A, T0]
+    bounds : 2-tuple or None
+        Bounds ([ZNE_min, A_min, T0_min],
+                [ZNE_max, A_max, T0_max])
+    method : str
+        Optimization method ("trf", "dogbox", "lm")
+    max_nfev : int or None
+        Maximum function evaluations
+    ftol, xtol, gtol : float
+        Convergence tolerances
+    verbose : int
+        Verbosity level
+
+    Returns
+    -------
+    output : dict
+        Dictionary with input metadata and fit results
+    """
+
+    def model(t, ZNE, A, T0):
+        return ZNE + A / (1.0 + (t / T0) ** n)
+
+    if p0 is None:
+        p0 = [
+            y[-1],             # ZNE ~ largest-t value in small window
+            y[0] - y[-1],      # A   ~ curvature at t ~ 0
+            np.median(t),      # T0  ~ middle of small-t window
+        ]
+
+    if bounds is None:
+        bounds = (
+            [-20.0,   0.0,  1e-6],   # ZNE, A, T0
+            [ -4.0, 200.0, 10.0],
+        )
+
+    popt, pcov = curve_fit(
+        model,
+        t,
+        y,
+        sigma=sigma,
+        p0=p0,
+        bounds=bounds,
+        method=method,
+        max_nfev=max_nfev,
+        ftol=ftol,
+        xtol=xtol,
+        gtol=gtol,
+        verbose=verbose,
+        absolute_sigma=True,
+    )
+
+    output = {
+        "input": {
+            "t": t,
+            "y": y,
+            "sigma": sigma,
+            "n": n,
+            "p0": p0,
+            "bounds": bounds,
+            "method": method,
+            "max_nfev": max_nfev,
+            "ftol": ftol,
+            "xtol": xtol,
+            "gtol": gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,
+            "pcov": pcov,
+        },
+    }
+
+    return output
+
+def fit_f_noisy(
+    t,
+    y,
+    sigma,
+    n,
+    *,
+    p0,
+    bounds,
+    method="trf",
+    max_nfev=None,
+    ftol=1e-10,
+    xtol=1e-10,
+    gtol=1e-10,
+    verbose=0,
+):
+    """
+    Global fit of noisy model using all T_max data.
+
+    Model:
+        f_noisy(t) = exp(-gamma * t)
+                     * [ ZNE + A / (1 + (t / T0)**n) ]
+
+    Parameters
+    ----------
+    t : array_like
+        T_max data
+    y : array_like
+        Observed energies
+    sigma : array_like or None
+        Standard deviations
+    n : float
+        Fixed exponent
+
+    Keyword-only parameters
+    -----------------------
+    p0 : list
+        Initial guess [gamma, ZNE, A, T0]
+    bounds : 2-tuple
+        Parameter bounds
+    method : str
+        Optimization method
+    max_nfev : int or None
+        Maximum function evaluations
+    ftol, xtol, gtol : float
+        Convergence tolerances
+    verbose : int
+        Verbosity level
+
+    Returns
+    -------
+    dict with keys:
+        popt : ndarray
+            [gamma, ZNE, A, T0]
+        pcov : ndarray
+            Covariance matrix
+    """
+
+    def model(t, gamma, ZNE, A, T0):
+        return np.exp(-gamma * t) * (
+            ZNE + A / (1.0 + (t / T0) ** n)
+        )
+
+    popt, pcov = curve_fit(
+        model,
+        t,
+        y,
+        sigma=sigma,
+        p0=p0,
+        bounds=bounds,
+        method=method,
+        max_nfev=max_nfev,
+        ftol=ftol,
+        xtol=xtol,
+        gtol=gtol,
+        verbose=verbose,
+        absolute_sigma=True,
+    )
+
+    output = {
+        "input": {
+            "t": t,
+            "y": y,
+            "sigma": sigma,
+            "n": n,
+            "p0": p0,
+            "bounds": bounds,
+            "method": method,
+            "max_nfev": max_nfev,
+            "ftol": ftol,
+            "xtol": xtol,
+            "gtol": gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,
+            "pcov": pcov,
+        },
+    }
+
+    return output
+
+def fit_gamma(
+    t,
+    y,
+    sigma,
+    E_mix,
+    n,
+    *,
+    p0=None,
+    bounds=None,
+    method="trf",
+    max_nfev=None,
+    ftol=1e-8,
+    xtol=1e-8,
+    gtol=1e-8,
+    verbose=0,
+):
+    """
+    Fit exponential decay rate gamma using only large-t data.
+
+    Model:
+        f_noisy(t) = E_mix
+                     + exp(-gamma * t)
+                       * [ (ZNE + A / (1 + (t / T0)**n)) - E_mix ]
+
+    Parameters
+    ----------
+    t : array_like
+        T_max data
+    y : array_like
+        Observed energy values
+    sigma : array_like or None
+        Standard deviations
+    E_mix : float
+        Mixed-state energy (fixed)
+    n : float
+        Fixed power-law exponent
+
+    Keyword-only parameters
+    -----------------------
+    p0 : list or None
+        Initial guess [gamma, ZNE, A, T0]
+    bounds : 2-tuple or None
+        Bounds ([gamma_min, ZNE_min, A_min, T0_min],
+                [gamma_max, ZNE_max, A_max, T0_max])
+    method : str
+        Optimization method ("trf", "dogbox", "lm")
+    max_nfev : int or None
+        Maximum function evaluations
+    ftol, xtol, gtol : float
+        Convergence tolerances
+    verbose : int
+        Verbosity level
+
+    Returns
+    -------
+    popt : ndarray
+        [gamma, ZNE, A, T0]
+    pcov : ndarray
+        Covariance matrix
+    """
+
+    def model(t, gamma, ZNE, A, T0):
+        return (
+            E_mix
+            + np.exp(-gamma * t)
+            * ((ZNE + A / (1.0 + (t / T0) ** n)) - E_mix)
+        )
+
+    if p0 is None:
+        p0 = [
+            0.01,              # gamma
+            y[-1],             # ZNE ~ large-t value
+            y[0] - y[-1],      # A
+            t[len(t) // 2],    # T0
+        ]
+
+    if bounds is None:
+        # Parameter order: [gamma, ZNE, A, T0]
+        bounds = (
+            [0,-10, 0, 10.0],
+            [10, -5, 20, 100],
+        )
+
+    popt, pcov = curve_fit(
+        model,
+        t,
+        y,
+        sigma=sigma,
+        p0=p0,
+        bounds=bounds,
+        method=method,
+        max_nfev=max_nfev,
+        ftol=ftol,
+        xtol=xtol,
+        gtol=gtol,
+        verbose=verbose,
+        absolute_sigma=True,
+    )
+
+    output = {
+        "input": {
+            "t": t,
+            "y": y,
+            "sigma": sigma,
+            "E_mix": E_mix,
+            "n": n,
+            "p0": p0,
+            "bounds": bounds,
+            "method": method,
+            "max_nfev": max_nfev,
+            "ftol": ftol,
+            "xtol": xtol,
+            "gtol": gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,
+            "pcov": pcov,
+        },
+    }
+
+    return output
+
+
+
+
+
 
 def fit_full(
     t,
