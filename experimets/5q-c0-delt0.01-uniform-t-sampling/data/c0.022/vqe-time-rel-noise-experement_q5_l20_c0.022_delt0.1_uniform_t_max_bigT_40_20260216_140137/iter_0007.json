@@ -1,0 +1,3067 @@
+{
+    "config": {
+        "run": "vqe-bigT-simulation-noisy",
+        "bigT": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+        ],
+        "C": 0.022,
+        "del_t": 0.1,
+        "nqubits": 5,
+        "state": "dmatrix",
+        "output": {
+            "file_name_prefix": "vqe-time-rel-noise-experement_q5_l20_c0.022_delt0.1_uniform_t_max",
+            "draw": {
+                "status": false,
+                "fig_dpi": 100,
+                "type": "png"
+            }
+        },
+        "observable": {
+            "def": "ising",
+            "coefficients": {
+                "cn": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "bn": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "r": 1
+            }
+        },
+        "ansatz": {
+            "layer": 20,
+            "gateset": 1,
+            "ugate": {
+                "type": "heisenberg",
+                "coefficients": {
+                    "cn": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        0.5
+                    ],
+                    "bn": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "r": 0
+                },
+                "time": {
+                    "min": 0.0,
+                    "max": 40
+                }
+            }
+        },
+        "vqe": {
+            "iteration": 10,
+            "optimization": {
+                "status": true,
+                "algorithm": "SLSQP",
+                "constraint": true
+            }
+        },
+        "init_param": {
+            "value": "random"
+        },
+        "noise_profile": {
+            "status": false,
+            "type": "dephasing",
+            "noise_prob": [
+                0.001,
+                0.001,
+                0.0,
+                0.0
+            ],
+            "noise_on_init_param": {
+                "status": false,
+                "value": 0
+            }
+        },
+        "redundant": {
+            "identity_factors": [
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            ]
+        },
+        "zne": {
+            "method": "richardson",
+            "degree": 1,
+            "sampling": "default",
+            "data_points": null
+        }
+    },
+    "output": {
+        "iteration_index": 7,
+        "exact_sol": -6.026674183332271,
+        "initial_cost_history": [
+            1.5468333887630001
+        ],
+        "initial_randm_param_values": [
+            {
+                "time-len": 20,
+                "time": [
+                    1.853642193348981,
+                    5.893915716911766,
+                    6.639062419972364,
+                    8.345006648386022,
+                    10.144416604113946,
+                    12.49477214704179,
+                    16.504397033235946,
+                    18.618352911767953,
+                    18.983840629999126,
+                    19.364936186285963,
+                    22.632938054916323,
+                    26.64047379397569,
+                    27.362640155195137,
+                    27.48805874169502,
+                    28.856303680929113,
+                    29.03574195683442,
+                    29.47428896046897,
+                    36.660189935810415,
+                    37.96162442234495,
+                    38.539149858411456
+                ],
+                "theta-len": 40,
+                "theta": [
+                    0.015907794751286352,
+                    0.036672288876357886,
+                    0.05150003142233013,
+                    0.07315123936403413,
+                    0.05564672424253536,
+                    0.06372884548399398,
+                    0.08961707497388442,
+                    0.009125697547241018,
+                    0.020411012213893576,
+                    0.032880568662055666,
+                    0.06496668147324407,
+                    0.030143792214659737,
+                    0.07158108986082166,
+                    0.02760752416712835,
+                    0.0593111093830654,
+                    0.005844097864707265,
+                    0.017600138089148842,
+                    0.08218626894760245,
+                    0.04923831915527125,
+                    0.03606021444982586,
+                    0.06083783764128297,
+                    0.04326085460910428,
+                    0.04079863463376712,
+                    0.04524363449234188,
+                    0.06456469612689167,
+                    0.026504992593120103,
+                    0.031870387643599354,
+                    0.09266309319194911,
+                    0.058258404504428686,
+                    0.03995772198490304,
+                    0.0778860736074845,
+                    0.0005000198548964274,
+                    0.05595572618880898,
+                    0.04101667393673202,
+                    0.09466523860578607,
+                    0.0026555117030273804,
+                    0.05815840450061976,
+                    0.0565426175306233,
+                    0.08068347801838897,
+                    0.02775606471179747
+                ]
+            }
+        ],
+        "optimized_minimum_cost": [
+            -1.0951649002007626
+        ],
+        "optimized_parameters": [
+            [
+                2.9078219630117044,
+                6.231924436127976,
+                7.525306459525391,
+                9.471331017062607,
+                10.850882940033522,
+                13.286034932432333,
+                17.51022201323872,
+                19.036229636766336,
+                20.617451745573877,
+                21.977273310860355,
+                23.939284056752832,
+                25.800426764689927,
+                28.09460684766962,
+                28.09460684766962,
+                30.042200205753556,
+                30.086576610161956,
+                31.87810082497365,
+                36.5439966520815,
+                38.52937801407253,
+                40.0,
+                0.9409921166366894,
+                -0.06349671475444664,
+                0.8305017697335928,
+                -0.35484652542502626,
+                0.9571369348293625,
+                0.06193740496636931,
+                0.8153667349937582,
+                -0.45709551841745055,
+                1.4169827904442358,
+                -2.648125027188111,
+                1.1306276999347553,
+                2.171194627887885,
+                1.0234589729917665,
+                0.6805008722257614,
+                0.42600231366883606,
+                -2.759280275355924,
+                0.7474477300577962,
+                -0.27601831738551313,
+                0.7791357776202419,
+                -0.21311658393238014,
+                0.6956395997650833,
+                -0.2960852755359968,
+                0.9006651681813214,
+                -0.034149592105665795,
+                0.8613951755746871,
+                -0.08318829566532197,
+                0.36508897324935546,
+                -1.712007098965131,
+                1.320554136535968,
+                0.6862007800893817,
+                1.2606353431943473,
+                -1.9950476096432497,
+                1.3033123615802622,
+                1.9334842651297144,
+                0.6970136659654041,
+                -0.07131652504319111,
+                0.5662321575129475,
+                -0.11023939509507424,
+                0.39799312752093646,
+                -0.07138203358893257
+            ]
+        ],
+        "noise_details": {
+            "identity_factors": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "noise_level": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "gates_num": [
+                4,
+                1,
+                1,
+                0
+            ],
+            "noise_profile": {
+                "status": false,
+                "type": "dephasing",
+                "noise_prob": [
+                    0.001,
+                    0.001,
+                    0.0,
+                    0.0
+                ],
+                "noise_on_init_param": {
+                    "status": false,
+                    "value": 0
+                }
+            },
+            "odd_wires": 3
+        },
+        "run_time_sec": 604.8410165309906,
+        "lie_trotter_details_all": [
+            [
+                {
+                    "parent_layer": 0,
+                    "time_interval": [
+                        0.0,
+                        2.9078219630117044
+                    ],
+                    "trotter_details": {
+                        "total_steps": 30,
+                        "noise_prob": 0.0021324027728752497,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 23,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 24,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 25,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 26,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 27,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 28,
+                                    "Ni": 30
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 29,
+                                    "Ni": 30
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 1,
+                    "time_interval": [
+                        2.9078219630117044,
+                        6.231924436127976
+                    ],
+                    "trotter_details": {
+                        "total_steps": 34,
+                        "noise_prob": 0.0021508898355458226,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 23,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 24,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 25,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 26,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 27,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 28,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 29,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 30,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 31,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 32,
+                                    "Ni": 34
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 33,
+                                    "Ni": 34
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 2,
+                    "time_interval": [
+                        6.231924436127976,
+                        7.525306459525391
+                    ],
+                    "trotter_details": {
+                        "total_steps": 13,
+                        "noise_prob": 0.002188800347287933,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 13
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 13
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 3,
+                    "time_interval": [
+                        7.525306459525391,
+                        9.471331017062607
+                    ],
+                    "trotter_details": {
+                        "total_steps": 20,
+                        "noise_prob": 0.0021406270132909373,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 20
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 4,
+                    "time_interval": [
+                        9.471331017062607,
+                        10.850882940033522
+                    ],
+                    "trotter_details": {
+                        "total_steps": 14,
+                        "noise_prob": 0.002167867307525723,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 14
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 5,
+                    "time_interval": [
+                        10.850882940033522,
+                        13.286034932432333
+                    ],
+                    "trotter_details": {
+                        "total_steps": 25,
+                        "noise_prob": 0.002142933753310954,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 23,
+                                    "Ni": 25
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 24,
+                                    "Ni": 25
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 6,
+                    "time_interval": [
+                        13.286034932432333,
+                        17.51022201323872
+                    ],
+                    "trotter_details": {
+                        "total_steps": 43,
+                        "noise_prob": 0.002161211994831175,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 23,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 24,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 25,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 26,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 27,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 28,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 29,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 30,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 31,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 32,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 33,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 34,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 35,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 36,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 37,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 38,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 39,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 40,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 41,
+                                    "Ni": 43
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 42,
+                                    "Ni": 43
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 7,
+                    "time_interval": [
+                        17.51022201323872,
+                        19.036229636766336
+                    ],
+                    "trotter_details": {
+                        "total_steps": 16,
+                        "noise_prob": 0.002098260482350471,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 16
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 8,
+                    "time_interval": [
+                        19.036229636766336,
+                        20.617451745573877
+                    ],
+                    "trotter_details": {
+                        "total_steps": 16,
+                        "noise_prob": 0.002174180399610369,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 16
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 16
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 9,
+                    "time_interval": [
+                        20.617451745573877,
+                        21.977273310860355
+                    ],
+                    "trotter_details": {
+                        "total_steps": 14,
+                        "noise_prob": 0.002136862459735893,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 14
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 14
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 10,
+                    "time_interval": [
+                        21.977273310860355,
+                        23.939284056752832
+                    ],
+                    "trotter_details": {
+                        "total_steps": 20,
+                        "noise_prob": 0.0021582118204817257,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 20
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 11,
+                    "time_interval": [
+                        23.939284056752832,
+                        25.800426764689927
+                    ],
+                    "trotter_details": {
+                        "total_steps": 19,
+                        "noise_prob": 0.0021550073460324254,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 19
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 19
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 12,
+                    "time_interval": [
+                        25.800426764689927,
+                        28.09460684766962
+                    ],
+                    "trotter_details": {
+                        "total_steps": 23,
+                        "noise_prob": 0.002194433122850141,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 23
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 23
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 13,
+                    "time_interval": [
+                        28.09460684766962,
+                        28.09460684766962
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 14,
+                    "time_interval": [
+                        28.09460684766962,
+                        30.042200205753556
+                    ],
+                    "trotter_details": {
+                        "total_steps": 20,
+                        "noise_prob": 0.0021423526938923287,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 20
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 15,
+                    "time_interval": [
+                        30.042200205753556,
+                        30.086576610161956
+                    ],
+                    "trotter_details": {
+                        "total_steps": 1,
+                        "noise_prob": 0.0009762808969847966,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 16,
+                    "time_interval": [
+                        30.086576610161956,
+                        31.87810082497365
+                    ],
+                    "trotter_details": {
+                        "total_steps": 18,
+                        "noise_prob": 0.0021896407069920713,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 18
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 18
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 17,
+                    "time_interval": [
+                        31.87810082497365,
+                        36.5439966520815
+                    ],
+                    "trotter_details": {
+                        "total_steps": 47,
+                        "noise_prob": 0.0021840363446036758,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 20,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 21,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 22,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 23,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 24,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 25,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 26,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 27,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 28,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 29,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 30,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 31,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 32,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 33,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 34,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 35,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 36,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 37,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 38,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 39,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 40,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 41,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 42,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 43,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 44,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 45,
+                                    "Ni": 47
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 46,
+                                    "Ni": 47
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 18,
+                    "time_interval": [
+                        36.5439966520815,
+                        38.52937801407253
+                    ],
+                    "trotter_details": {
+                        "total_steps": 20,
+                        "noise_prob": 0.002183919498190126,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 15,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 16,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 17,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 18,
+                                    "Ni": 20
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 19,
+                                    "Ni": 20
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "parent_layer": 19,
+                    "time_interval": [
+                        38.52937801407253,
+                        40.0
+                    ],
+                    "trotter_details": {
+                        "total_steps": 15,
+                        "noise_prob": 0.0021569122460269596,
+                        "steps": [
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 0,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 1,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 2,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 3,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 4,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 5,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 6,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 7,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 8,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 9,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 10,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 11,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 12,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 13,
+                                    "Ni": 15
+                                }
+                            },
+                            {
+                                "deep_trotter": {
+                                    "step_loc": 14,
+                                    "Ni": 15
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        ]
+    },
+    "others": {
+        "observable_string": "1 X 0 X 1 + 1 Z 0 + 1 X 1 X 2 + 1 Z 1 + 1 X 2 X 3 + 1 Z 2 + 1 X 3 X 4 + 1 Z 3 + 1 Z 4",
+        "time_evolution_gate_hamiltonian_string": [
+            "0.5 X 0 X 1 + 0.5 Y 0 Y 1 + 0.5 Z 0 Z 1 + 0.5 X 1 X 2 + 0.5 Y 1 Y 2 + 0.5 Z 1 Z 2 + 0.5 X 2 X 3 + 0.5 Y 2 Y 3 + 0.5 Z 2 Z 3 + 0.5 X 3 X 4 + 0.5 Y 3 Y 4 + 0.5 Z 3 Z 4"
+        ]
+    }
+}
