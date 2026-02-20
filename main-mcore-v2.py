@@ -90,7 +90,7 @@ if __name__ == "__main__":
     config_path = os.path.abspath(sys.argv[1])
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
-            # Name variables
+        # Name variables
         nqubit = config["nqubits"]
         c_val = config["C"]
         del_t = config["del_t"]
