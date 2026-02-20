@@ -1,3 +1,7 @@
+"""
+Multicore version of running indirect-cntrl VQE
+"""
+
 import json
 import os
 import sys
@@ -86,11 +90,15 @@ if __name__ == "__main__":
     config_path = os.path.abspath(sys.argv[1])
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
-
+            # Name variables
+        nqubit = config["nqubits"]
+        c_val = config["C"]
+        del_t = config["del_t"]
+        layer_val = config["ansatz"]["layer"]
     if config and config["run"].lower() == "vqe-bigt-simulation-noisy":
         # 1. Parent Directory Setup
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        parent_folder_name = f"VQE_Experiment_{timestamp}"
+        parent_folder_name = f"VQE_Experiment_q{nqubit}_l{layer_val}_c{c_val}_delt{del_t}_{timestamp}"
         parent_dir = os.path.join(os.getcwd(), "output", parent_folder_name)
         os.makedirs(parent_dir, exist_ok=True)
         
@@ -104,9 +112,10 @@ if __name__ == "__main__":
         
         t_folder_map = {}
         all_tasks = []
+
         for t_val in sorted(config["bigT"]):
             # Create a subfolder for each BigT inside the parent
-            subfolder_name = f"{config['output']['file_name_prefix']}_bigT_{t_val}"
+            subfolder_name = f"{config['output']['file_name_prefix']}_q{nqubit}_l{layer_val}_c{c_val}_delt{del_t}_bigT_{t_val}"
             subfolder_path = os.path.join(parent_dir, subfolder_name)
             os.makedirs(subfolder_path, exist_ok=True)
             t_folder_map[t_val] = subfolder_path
