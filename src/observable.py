@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from src.hamiltonian import create_heisenberg_hamiltonian, create_ising_hamiltonian, create_xy_hamiltonian
+from src.hamiltonian import create_heisenberg_hamiltonian, create_ising_hamiltonian, create_xy_hamiltonian, create_total_z_hamiltonian
 
 
 def constructObservable(nqubits: int, definition: str, coefficient: Dict[str, float]) -> Dict[str, float]:
@@ -59,6 +59,10 @@ def constructObservable(nqubits: int, definition: str, coefficient: Dict[str, fl
         observable_cn = [1.0 for _ in range(nqubits - 1)]
 
         target_observable = create_heisenberg_hamiltonian(nqubits=nqubits, cn=observable_cn)
+    
+    elif definition.lower() == "total_z":
+
+        target_observable = create_total_z_hamiltonian(nqubits=nqubits,  coeff=1)
 
     else:
         raise ValueError(

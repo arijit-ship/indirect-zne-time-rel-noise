@@ -119,3 +119,21 @@ def create_heisenberg_hamiltonian(nqubits: int, cn: List[float]) -> Observable:
         hami += cn[i] * QubitOperator(f"Z{i} Z{i+1}")
 
     return create_observable_from_openfermion_text(str(hami))
+
+def create_total_z_hamiltonian(nqubits: int, coeff: float = 1.0) -> Observable:
+    """
+    Constructs a Total Z-Magnetization observable (\sum Z_i) for calibration.
+    
+    Args:
+        nqubits (int): The total number of qubits in the circuit.
+        coeff (float): Scalar multiplier for the Z terms. Defaults to 1.0.
+
+    Returns:
+        Observable: An OpenFermion-compatible observable object containing 
+            the sum of Z operators for all qubit indices.
+    """
+    hami = QubitOperator()
+    for i in range(nqubits):
+        hami += coeff * QubitOperator(f"Z{i}")
+    
+    return create_observable_from_openfermion_text(str(hami))
