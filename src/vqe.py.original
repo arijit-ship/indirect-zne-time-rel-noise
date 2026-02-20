@@ -352,20 +352,3 @@ class IndirectVQE:
         Returns time-evolution gate Hamiltonian.
         """
         return self.ugate_hami
-
-    def calculate_purity(density_matrix_obj):
-        """
-        NOT VERIFED!
-        Calculates Tr(rho^2) for a given Qulacs DensityMatrix object.
-        """
-        # 1. Get the density matrix as a numpy array
-        rho = density_matrix_obj.get_matrix() #
-        
-        # 2. Calculate rho^2 (matrix multiplication)
-        rho_squared = np.matmul(rho, rho)
-        
-        # 3. Calculate the trace
-        purity = np.trace(rho_squared)
-        
-        # Purity is real, but NumPy may return a complex type; take the real part.
-        return purity.real
