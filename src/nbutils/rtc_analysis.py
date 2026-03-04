@@ -180,7 +180,7 @@ def perform_rtc_analysis(
 
     # 4. CONSTRUCT TEXT OUTPUT
     txt = "FIT 1:  R(T,C) (R vs C)\n" + "-"*90 + "\n"
-    txt += rf"R(T,C) = C * F_1(T) + C^2 * F_2(T) + C^3 * F_3(T)... with order of C: {degree_s1}" + "\n\n"
+    txt += rf"$R(T,C) = C * F_1(T) + C^2 * F_2(T) + C^3 * F_3(T)$... with order of C: {degree_s1}" + "\n\n"
     txt += df_s1.to_string(index=False, formatters={c: "{:.4e}".format for c in df_s1.columns if 'F' in c})
     txt += "\n\nFIT 2: Fi  (Fi vs T)\n" + "-"*90 + "\n"
     for i, g in enumerate(global_results):
@@ -211,7 +211,7 @@ def perform_rtc_analysis(
     C_range = np.linspace(0, max(target_C) * 1.05, 200)
 
     for T_t, (cp, rp) in exact_points_by_T.items():
-        sc = ax_s1.scatter(cp, rp, s=40, edgecolors='k', linewidth=0.5)
+        sc = ax_s1.scatter(cp, rp, s=30, edgecolors='k', linewidth=0.5, label=f"T {T_t}")
         color = sc.get_facecolor()[0]
 
         row_coeffs = df_s1[df_s1['T_target'] == T_t].iloc[0, 1:].values
@@ -223,7 +223,7 @@ def perform_rtc_analysis(
     ax_s1.set_title(f"R(T,C) fitting (degree={degree_s1})", pad=6)
     ax_s1.set_xlabel("C")
     ax_s1.set_ylabel("R(T,C)")
-    ax_s1.legend([f"T={T}" for T in exact_points_by_T.keys()],
+    ax_s1.legend(
                 ncol=min(4, len(exact_points_by_T)),
                 fontsize=9,
                 frameon=False)
