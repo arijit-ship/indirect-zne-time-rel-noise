@@ -218,7 +218,7 @@ def perform_rtc_analysis(
         R_line = sum(c_val * (C_range**(idx+1))
                     for idx, c_val in enumerate(row_coeffs))
 
-        ax_s1.plot(C_range, R_line, color=color, alpha=s1_alpha, lw=2)
+        ax_s1.plot(C_range, R_line, color=color, alpha=s1_alpha, lw=1)
 
     ax_s1.set_title(f"R(T,C) fitting (degree={degree_s1})", pad=6)
     ax_s1.set_xlabel("C")
