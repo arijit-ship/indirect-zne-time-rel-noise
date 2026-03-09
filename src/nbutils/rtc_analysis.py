@@ -22,6 +22,8 @@ def perform_rtc_analysis(
     degree_s2=[2, 2],
     figsize=(14, 16),
     s1_alpha=0.6,
+    s1_leg_ncol=6,
+    s1_leg_anc = (0.5, -0.3),
     pltxt_loc=(0.5, 0.1),
 ):
     """
@@ -207,13 +209,29 @@ def perform_rtc_analysis(
     # Top Plot (Stage 1)
     # ======================
     ax_s1 = fig.add_subplot(gs[0, :])
-
+    
     C_range = np.linspace(0, max(target_C) * 1.05, 200)
 
-    for T_t, (cp, rp) in exact_points_by_T.items():
-        sc = ax_s1.scatter(cp, rp, s=30, edgecolors='k', linewidth=0.5, label=f"T {T_t}")
-        color = sc.get_facecolor()[0]
+    # Color setting
+    #-------------------------------------------
+    T_vals = list(exact_points_by_T.keys())
+    N = len(T_vals)
 
+    if N <= 20:
+        # use matplotlib default color cycle
+        default_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+        colors = [default_colors[i % len(default_colors)] for i in range(N)]
+    else:
+        # many curves → hsv spread
+        cmap = plt.cm.hsv
+        colors = cmap(np.linspace(0, 0.95, N))
+    #-------------------------------------------
+
+    for i, (T_t, (cp, rp)) in enumerate(exact_points_by_T.items()):
+        color = colors[i]
+        sc = ax_s1.scatter(cp, rp,  color = colors[i], s=30, edgecolors='k', linewidth=0.5, label=f"T {T_t}")
+        #color = sc.get_facecolor()[0]
+        
         row_coeffs = df_s1[df_s1['T_target'] == T_t].iloc[0, 1:].values
         R_line = sum(c_val * (C_range**(idx+1))
                     for idx, c_val in enumerate(row_coeffs))
@@ -224,9 +242,11 @@ def perform_rtc_analysis(
     ax_s1.set_xlabel("C")
     ax_s1.set_ylabel("R(T,C)")
     ax_s1.legend(
-                ncol=min(4, len(exact_points_by_T)),
+                ncol=min(s1_leg_ncol, len(exact_points_by_T)),
                 fontsize=9,
-                frameon=False)
+                frameon=False,
+                loc='upper center',
+                bbox_to_anchor=s1_leg_anc)
 
     # ======================
     # Bottom Plots (Stage 2)
