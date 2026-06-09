@@ -25,6 +25,7 @@ def perform_rtc_analysis(
     s1_leg_ncol=6,
     s1_leg_anc = (0.5, -0.3),
     pltxt_loc=(0.5, 0.1),
+    txt_status = [True, True]
 ):
     """
     Perform a two-stage polynomial fitting of the response function R(T, C)
@@ -56,12 +57,11 @@ def perform_rtc_analysis(
     ----------
     R_data : dict[float, array-like]
         Dictionary mapping control parameter values C to arrays of measured
-        R(T, C) values. Each array corresponds to the same ordering as
-        `T_data[C]`.
+        R(T, C) values.
 
     T_data : dict[float, array-like]
-        Dictionary mapping control parameter values C to arrays of 
-        values T at which R(T, C) was evaluated.
+        Dictionary mapping control parameter values C to arrays of T values
+        at which R(T, C) was evaluated.
 
     target_T : array-like
         List of target T values at which Stage-1 fits are performed.
@@ -69,16 +69,16 @@ def perform_rtc_analysis(
 
     target_C : array-like
         List of control parameter values C to include in the Stage-1 fits.
-    
-    T_by_C : array-like
-        To validate target T, C.
 
+    T_by_C : dict or array-like
+        Mapping or collection used to validate the availability of target
+        (T, C) pairs in the dataset.
 
     degree_s1 : int, default=2
         Polynomial degree in C for Stage-1 fitting. The model enforces
-        zero intercept, so the fitted basis is {C, C², ..., C^degree_s1}.
+        a zero intercept, so the fitted basis is {C, C², ..., C^degree_s1}.
 
-    degree_s2 : int or list of int, default=[2, 2]
+    degree_s2 : int or list[int], default=[2, 2]
         Polynomial degrees in T for Stage-2 fitting of each coefficient Fᵢ(T).
         If an integer is provided, the same degree is used for all Fᵢ.
         If a list is provided, its length must be at least `degree_s1`.
@@ -89,8 +89,18 @@ def perform_rtc_analysis(
     s1_alpha : float, default=0.6
         Transparency used for Stage-1 fitted R(T, C) curves.
 
+    s1_leg_ncol : int, default=6
+        Number of columns used in the legend for the Stage-1 plot.
+
+    s1_leg_anc : tuple, default=(0.5, -0.3)
+        Anchor position for the Stage-1 legend.
+
     pltxt_loc : tuple, default=(0.5, 0.1)
         (x, y) location in figure coordinates for the summary text box.
+
+    txt_status : list[bool], default=[True, True]
+        Flags controlling whether summary text for Stage 1 and Stage 2
+        results is displayed in the figure.
 
     Returns
     -------
@@ -226,7 +236,9 @@ def perform_rtc_analysis(
         cmap = plt.cm.hsv
         colors = cmap(np.linspace(0, 0.95, N))
     #-------------------------------------------
-
+    PRINT_LEGEND_S1 = txt_status[0]
+    PRINT_RESULT = txt_status[1]
+    ######################################
     for i, (T_t, (cp, rp)) in enumerate(exact_points_by_T.items()):
         color = colors[i]
         sc = ax_s1.scatter(cp, rp,  color = colors[i], s=30, edgecolors='k', linewidth=0.5, label=f"T {T_t}")
@@ -241,12 +253,13 @@ def perform_rtc_analysis(
     ax_s1.set_title(f"R(T,C) fitting (degree={degree_s1})", pad=6)
     ax_s1.set_xlabel("C")
     ax_s1.set_ylabel("R(T,C)")
-    ax_s1.legend(
-                ncol=min(s1_leg_ncol, len(exact_points_by_T)),
-                fontsize=9,
-                frameon=False,
-                loc='upper center',
-                bbox_to_anchor=s1_leg_anc)
+    if PRINT_LEGEND_S1:
+        ax_s1.legend(
+                    ncol=min(s1_leg_ncol, len(exact_points_by_T)),
+                    fontsize=9,
+                    frameon=False,
+                    loc='upper center',
+                    bbox_to_anchor=s1_leg_anc)
 
     # ======================
     # Bottom Plots (Stage 2)
@@ -273,17 +286,17 @@ def perform_rtc_analysis(
     # ======================
     ax_txt = fig.add_subplot(gs[2, :])
     ax_txt.axis("off")
-
-    ax_txt.text(
-        0.5, 0.5,
-        txt,
-        fontsize=8,
-        family='monospace',
-        ha='center',
-        va='center',
-        bbox=dict(boxstyle='round', facecolor='white',
-                edgecolor='black', linewidth=0.8)
-    )
+    if PRINT_RESULT:
+        ax_txt.text(
+            pltxt_loc[0], pltxt_loc[1],
+            txt,
+            fontsize=8,
+            family='monospace',
+            ha='center',
+            va='center',
+            bbox=dict(boxstyle='round', facecolor='white',
+                    edgecolor='black', linewidth=0.8)
+        )
 
     plt.show()
     return df_s1, global_results

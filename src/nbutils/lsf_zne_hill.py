@@ -176,7 +176,7 @@ def fit_hill_noiseless(
         p0=p0,
         bounds=bounds,
         method=method,
-        absolute_sigma=(sigma is not None),
+        absolute_sigma=False,
         max_nfev=max_nfev,
         ftol=ftol,
         xtol=xtol,
@@ -289,7 +289,7 @@ def fit_gamma_largeT(
         xtol=xtol,
         gtol=gtol,
         verbose=verbose,
-        absolute_sigma=True,
+        absolute_sigma=False,
     )
 
     output = {
@@ -313,6 +313,119 @@ def fit_gamma_largeT(
     }
 
     return output
+
+# Fitting q as well: f(t) = B * exp(-gamma * t^q) in large T region
+def fit_gamma_q_largeT(
+    t,
+    y,
+    sigma,
+    *,
+    p0=None,
+    bounds=None,
+    method="trf",
+    max_nfev=None,
+    ftol=1e-8,
+    xtol=1e-8,
+    gtol=1e-8,
+    verbose=0,
+):
+    """
+    Fit exponential decay rate gamma and stretching exponent q
+    using large-t data only.
+
+    Model:
+        f(t) = B * exp(-gamma * t^q)
+
+    Parameters
+    ----------
+    t : array_like
+        T_max data (large-t region)
+    y : array_like
+        Observed values
+    sigma : array_like or None
+        Standard deviations
+
+    Keyword-only parameters
+    -----------------------
+    p0 : list or None
+        Initial guess [gamma, B, q].
+        Defaults to [0.01, y[0], 1.0].
+    bounds : 2-tuple or None
+        Bounds ([gamma_min, B_min, q_min],
+                [gamma_max, B_max, q_max]).
+        Defaults to ([0, -inf, 0], [inf, inf, inf]).
+    method : str
+        Optimization method ("trf", "dogbox", "lm").
+    max_nfev : int or None
+        Maximum function evaluations.
+    ftol, xtol, gtol : float
+        Convergence tolerances.
+    verbose : int
+        Verbosity level.
+
+    Returns
+    -------
+    dict with keys:
+        "input"  : dict of all inputs (including resolved p0, bounds)
+        "output" : {"popt": ndarray [gamma, B, q],
+                    "pcov": ndarray (3x3 covariance matrix)}
+    """
+
+    def model(t, gamma, B, q):
+        return B * np.exp(-gamma * (t ** q))
+
+    if p0 is None:
+        p0 = [
+            0.01,   # gamma
+            y[0],   # B ~ first large-t value
+            1.0,    # q ~ start with simple exponential
+        ]
+
+    if bounds is None:
+        # Parameter order: [gamma, B, q]
+        bounds = (
+            [0.0,      -np.inf, 0.0   ],
+            [np.inf,    np.inf, np.inf],
+        )
+
+    popt, pcov = curve_fit(
+        model,
+        t,
+        y,
+        sigma=sigma,
+        p0=p0,
+        bounds=bounds,
+        method=method,
+        max_nfev=max_nfev,
+        ftol=ftol,
+        xtol=xtol,
+        gtol=gtol,
+        verbose=verbose,
+        absolute_sigma=False,
+    )
+
+    output = {
+        "input": {
+            "t":       t,
+            "y":       y,
+            "sigma":   sigma,
+            "p0":      p0,
+            "bounds":  bounds,
+            "method":  method,
+            "max_nfev": max_nfev,
+            "ftol":    ftol,
+            "xtol":    xtol,
+            "gtol":    gtol,
+            "verbose": verbose,
+        },
+        "output": {
+            "popt": popt,   # [gamma, B, q]
+            "pcov": pcov,   # 3x3 covariance matrix
+        },
+    }
+
+    return output
+
 
 def fit_smallT_ZNE(
     t,
@@ -397,7 +510,7 @@ def fit_smallT_ZNE(
         xtol=xtol,
         gtol=gtol,
         verbose=verbose,
-        absolute_sigma=True,
+        absolute_sigma=False,
     )
 
     output = {
@@ -499,7 +612,7 @@ def fit_f_noisy(
         xtol=xtol,
         gtol=gtol,
         verbose=verbose,
-        absolute_sigma=True,
+        absolute_sigma=False,
     )
 
     output = {
@@ -602,7 +715,7 @@ def fit_fq_noisy(
         xtol=xtol,
         gtol=gtol,
         verbose=verbose,
-        absolute_sigma=True,
+        absolute_sigma=False,
     )
 
     output = {
@@ -712,7 +825,7 @@ def fit_fq_noisy_gamma_q_only(
         xtol=xtol,
         gtol=gtol,
         verbose=verbose,
-        absolute_sigma=True,
+        absolute_sigma=False,
     )
 
     output = {
