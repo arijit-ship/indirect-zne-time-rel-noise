@@ -25,7 +25,8 @@ def perform_rtc_analysis(
     s1_leg_ncol=6,
     s1_leg_anc = (0.5, -0.3),
     pltxt_loc=(0.5, 0.1),
-    txt_status = [True, True]
+    txt_status = [True, True],
+    filesave_path=None
 ):
     """
     Perform a two-stage polynomial fitting of the response function R(T, C)
@@ -191,13 +192,15 @@ def perform_rtc_analysis(
         global_results.append(g_coeffs)
 
     # 4. CONSTRUCT TEXT OUTPUT
+    # Rename 'T_target' column display to 'T_max' in the text summary
+    df_s1_display = df_s1.rename(columns={'T_target': 'T_max'})
     txt = "FIT 1:  R(T,C) (R vs C)\n" + "-"*90 + "\n"
     txt += rf"$R(T,C) = C * F_1(T) + C^2 * F_2(T) + C^3 * F_3(T)$... with order of C: {degree_s1}" + "\n\n"
-    txt += df_s1.to_string(index=False, formatters={c: "{:.4e}".format for c in df_s1.columns if 'F' in c})
+    txt += df_s1_display.to_string(index=False, formatters={c: "{:.4e}".format for c in df_s1_display.columns if 'F' in c})
     txt += "\n\nFIT 2: Fi  (Fi vs T)\n" + "-"*90 + "\n"
     for i, g in enumerate(global_results):
-        terms = [f"({v:.3e})*T^{j}" for j, v in enumerate(g)]
-        txt += f"F{i+1}(T) [deg {degree_s2[i]}] = {' + '.join(terms)}\n"
+        terms = [f"({v:.3e})*T_max^{j}" for j, v in enumerate(g)]
+        txt += f"F{i+1}(T_max) [deg {degree_s2[i]}] = {' + '.join(terms)}\n"
 ##################################################################################################
     # 5. VISUALIZATION
     #fig = plt.figure(figsize=figsize)
@@ -241,8 +244,9 @@ def perform_rtc_analysis(
     ######################################
     for i, (T_t, (cp, rp)) in enumerate(exact_points_by_T.items()):
         color = colors[i]
-        sc = ax_s1.scatter(cp, rp,  color = colors[i], s=30, edgecolors='k', linewidth=0.5, label=f"T {T_t}")
-        #color = sc.get_facecolor()[0]
+        # Use T_{\text{max}} in legend labels
+        sc = ax_s1.scatter(cp, rp, color=colors[i], s=30, edgecolors='k', linewidth=0.5,
+                           label=r"$T_{\mathrm{max}}$" + f"={T_t}")
         
         row_coeffs = df_s1[df_s1['T_target'] == T_t].iloc[0, 1:].values
         R_line = sum(c_val * (C_range**(idx+1))
@@ -250,9 +254,9 @@ def perform_rtc_analysis(
 
         ax_s1.plot(C_range, R_line, color=color, alpha=s1_alpha, lw=1)
 
-    ax_s1.set_title(f"R(T,C) fitting (degree={degree_s1})", pad=6)
+    ax_s1.set_title(r"$R(T_{\mathrm{max}}, C)$" + f" fitting (degree={degree_s1})", pad=6)
     ax_s1.set_xlabel("C")
-    ax_s1.set_ylabel("R(T,C)")
+    ax_s1.set_ylabel(r"$R(T_{\mathrm{max}},C)$")
     if PRINT_LEGEND_S1:
         ax_s1.legend(
                     ncol=min(s1_leg_ncol, len(exact_points_by_T)),
@@ -278,8 +282,9 @@ def perform_rtc_analysis(
                     for j, val in enumerate(global_results[i]))
 
         ax.plot(T_range, Fi_line, 'k--', lw=1.5, label=f"deg {degree_s2[i]} Fit")
-        ax.set_xlabel(r"$T_{max}$", fontsize=9)
-        ax.set_ylabel(fr"$F_{i+1}(T)$", fontsize=9)
+        # Use T_{\text{max}} on x-axis labels
+        ax.set_xlabel(r"$T_{\mathrm{max}}$", fontsize=9)
+        ax.set_ylabel(rf"$F_{{{i+1}}}(T_{{\mathrm{{max}}}})$", fontsize=9)
         ax.legend(fontsize="x-small")
     # ======================
     # Dedicated Text Panel
@@ -297,6 +302,6 @@ def perform_rtc_analysis(
             bbox=dict(boxstyle='round', facecolor='white',
                     edgecolor='black', linewidth=0.8)
         )
-
+    plt.savefig(filesave_path, dpi=600, bbox_inches='tight') if filesave_path else None
     plt.show()
     return df_s1, global_results
